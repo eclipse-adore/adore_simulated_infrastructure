@@ -7,6 +7,9 @@ project(${PROJECT})
 include($ENV{SOURCE_DIRECTORY}/libraries/adore_libraries.cmake)
 
 include(requirements.cmake)
+set(CMAKE_CXX_STANDARD 20)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
+# 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 # Ensure the Release build uses -O3 for optimization
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -36,5 +39,18 @@ install(TARGETS
   DESTINATION lib/${PROJECT}
 )
 
-ament_package()
 
+add_library(simulatedinfrastructure_component SHARED src/simulated_infrastructure.cpp)
+add_all_target_include_directories(simulatedinfrastructure_component)
+add_all_target_link_libraries(simulatedinfrastructure_component)
+rclcpp_components_register_node(
+  simulatedinfrastructure_component
+  PLUGIN "adore::simulated_infrastructure::SimulatedInfrastructure"
+  EXECUTABLE simulatedinfrastructure
+)
+install(TARGETS simulatedinfrastructure_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+ament_package()

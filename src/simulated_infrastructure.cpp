@@ -24,7 +24,7 @@ namespace adore
 {
 namespace simulated_infrastructure
 {
-SimulatedInfrastructure::SimulatedInfrastructure() : Node( "simulated_infrastructure" )
+SimulatedInfrastructure::SimulatedInfrastructure(const rclcpp::NodeOptions & options) : Node( "simulated_infrastructure" , options)
 {
   load_parameters();
   create_publishers();
@@ -202,6 +202,10 @@ int
 main( int argc, char* argv[] )
 {
   rclcpp::init( argc, argv );
-  rclcpp::spin( std::make_shared<adore::simulated_infrastructure::SimulatedInfrastructure>() );
+  rclcpp::spin( std::make_shared<adore::simulated_infrastructure::SimulatedInfrastructure>(rclcpp::NodeOptions{}) );
   rclcpp::shutdown();
 }
+
+
+#include "rclcpp_components/register_node_macro.hpp"
+RCLCPP_COMPONENTS_REGISTER_NODE(adore::simulated_infrastructure::SimulatedInfrastructure)
