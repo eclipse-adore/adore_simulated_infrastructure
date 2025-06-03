@@ -55,7 +55,7 @@ class SimulatedInfrastructure : public rclcpp::Node
 {
 public:
 
-  SimulatedInfrastructure();
+  explicit SimulatedInfrastructure(const rclcpp::NodeOptions & options);
 
 private:
 
