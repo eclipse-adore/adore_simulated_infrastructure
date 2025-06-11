@@ -8,7 +8,9 @@
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
-  
+    <depend>rclcpp</depend>
+    <depend>rclcpp_components</depend>
+
   <build_depend>adore_ros2_msgs</build_depend>
   <build_depend>adore_dynamics_conversions</build_depend>
   <build_depend>adore_map_conversions</build_depend>
