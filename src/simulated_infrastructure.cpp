@@ -19,6 +19,7 @@
 #include "adore_ros2_msgs/msg/point2d.hpp"
 #include "adore_ros2_msgs/msg/polygon2d.hpp"
 #include "adore_ros2_msgs/msg/traffic_participant_set.hpp"
+#include <adore_dynamics_conversions.hpp>
 
 namespace adore
 {
@@ -76,7 +77,7 @@ void SimulatedInfrastructure::create_publishers()
 void SimulatedInfrastructure::create_subscribers()
 {
   subscriber_traffic_participants_with_trajectories = create_subscription<adore_ros2_msgs::msg::TrafficParticipantSet>( "traffic_participants_with_trajectories", 10, std::bind( &SimulatedInfrastructure::traffic_participants_with_trajectories_callback, this, std::placeholders::_1 ) );
-  main_timer = create_wall_timer( 100ms, std::bind( &SimulatedInfrastructure::timer_callback, this ) );
+  main_timer = create_wall_timer( 50ms, std::bind( &SimulatedInfrastructure::timer_callback, this ) );
   dynamic_subscription_timer = create_wall_timer( 1s, std::bind( &SimulatedInfrastructure::update_dynamic_subscriptions, this ) );
 }
 
@@ -192,6 +193,15 @@ SimulatedInfrastructure::other_vehicle_traffic_participant_callback( const adore
 
 void SimulatedInfrastructure::traffic_participants_with_trajectories_callback( const adore_ros2_msgs::msg::TrafficParticipantSet& msg )
 {
+  auto participant_cpp = dynamics::conversions::to_cpp_type( msg );
+  for ( auto participant : participant_cpp.participants )
+  {
+    
+    std::cerr << "Participant delay 2: " << participant.first << ", " << now().seconds() - participant.second.state.time << std::endl;
+  }
+
+
+  
   publisher_traffic_participant_set_with_trajectories->publish(msg);
 }
 
