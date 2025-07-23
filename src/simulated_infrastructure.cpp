@@ -194,13 +194,6 @@ SimulatedInfrastructure::other_vehicle_traffic_participant_callback( const adore
 void SimulatedInfrastructure::traffic_participants_with_trajectories_callback( const adore_ros2_msgs::msg::TrafficParticipantSet& msg )
 {
   auto participant_cpp = dynamics::conversions::to_cpp_type( msg );
-  for ( auto participant : participant_cpp.participants )
-  {
-    
-    std::cerr << "Participant delay 2: " << participant.first << ", " << now().seconds() - participant.second.state.time << std::endl;
-  }
-
-
   
   publisher_traffic_participant_set_with_trajectories->publish(msg);
 }
