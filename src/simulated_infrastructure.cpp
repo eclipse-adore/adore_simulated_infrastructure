@@ -113,7 +113,7 @@ void SimulatedInfrastructure::timer_callback()
 void SimulatedInfrastructure::update_dynamic_subscriptions()
 {
   auto       topic_names_and_types = get_topic_names_and_types();
-  std::regex valid_topic_regex( R"(^/([^/]+)/simulated_traffic_participant$)" );
+  std::regex valid_topic_regex( R"(^/([^/]+)/traffic_participant$)" );
   std::regex valid_type_regex( R"(^adore_ros2_msgs/msg/TrafficParticipant$)" );
 
   for( const auto& topic : topic_names_and_types )
